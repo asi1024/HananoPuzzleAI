@@ -41,7 +41,8 @@ int main (int argc, char *argv[]) {
         ofs << r.y << " " << r.x << std::endl;
         st.swap(r.y, r.x);
       }
-      std::cerr << i << " : " << st.score << std::endl;
+      std::cerr << i << "\t" << st.score <<
+        "\t(Node: " << res.count << ")" << std::endl;
       st.clear();
     }
   }
