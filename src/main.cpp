@@ -6,48 +6,62 @@
 #include "solver.cpp"
 #include "simulate.cpp"
 
-int main (int argc, char *argv[]) {
-  Stage st;
-  st.input(std::cin);
-  st.output(std::cout);
-  Data res = solve(st);
-  /*
-  rec.clear();
-  rec.push_back(Record(4, 3));
-  rec.push_back(Record(8, 7));
-  rec.push_back(Record(8, 6));
-  rec.push_back(Record(8, 5));
-  rec.push_back(Record(4, 4));
-  rec.push_back(Record(4, 3));
-  rec.push_back(Record(4, 4));
-  rec.push_back(Record(5, 5));
-  rec.push_back(Record(5, 6));
-  rec.push_back(Record(6, 4));
-  rec.push_back(Record(7, 3));
-  rec.push_back(Record(8, 5));
-  rec.push_back(Record(8, 6));
-  rec.push_back(Record(8, 7));
-  rec.push_back(Record(8, 8));
-  rec.push_back(Record(7, 3));
-  rec.push_back(Record(7, 4));
-  rec.push_back(Record(8, 5));
-  rec.push_back(Record(8, 6));
-  rec.push_back(Record(8, 7));
-  rec.push_back(Record(5, 7));
-  rec.push_back(Record(6, 8));
-  rec.push_back(Record(6, 9));
-  rec.push_back(Record(7, 10));
-  */
-  /*
-  Records rec;
-  rec.clear();
-  rec.push_back(Record(7, 10));
-  rec.push_back(Record(4, 7));
-  Data res = Data(rec, 0);
-  */
+void help() {
+  std::cerr << "calc : TODO" << std::endl;
+  std::cerr << "eval : TODO" << std::endl;
+  exit(1);
+}
 
-  simulate(st, std::cout, res.records);
-  std::cout << "Nodes: " << res.count << std::endl;
-  st.clear();
+const int def_score = 3600;
+
+int main (int argc, char *argv[]) {
+  if (strcmp(argv[1], "calc") == 0) {
+    if (argc != 2) help();
+    std::vector<std::string> problems;
+    std::ifstream ifs("dat/LIST");
+    std::string in;
+    while (ifs >> in) problems.push_back(in);
+    for (std::string i: problems) {
+      std::ifstream ifs(("dat/" + i + ".dat").c_str());
+      if (!ifs) std::cerr << "FILE NOT EXISTS -- " <<
+                  "dat/" << i << ".dat" << std::endl;
+      std::ofstream ofs(("asi1024/" + i).c_str());
+      Stage st;
+      st.input(ifs);
+      Data res = solve(st);
+      for (Record r: res.records) {
+        ofs << r.y << " " << r.x << std::endl;
+        st.swap(r.y, r.x);
+      }
+      std::cerr << i << " : " << st.score << std::endl;
+      st.clear();
+    }
+  }
+  else if (strcmp(argv[1], "eval") == 0) {
+    if (argc != 3) help();
+    std::string path = argv[2];
+    std::vector<std::string> problems;
+    for (int i = 1; i <= 50; ++i) {
+      std::string s = std::to_string(i);
+      if ((int)s.size() == 1) s = "0" + s;
+      problems.push_back(s);
+    }
+    for (std::string i: problems) {
+      std::ifstream ifs1(("dat/" + i + ".dat").c_str());
+      std::ifstream ifs2((path + "/" + i).c_str());
+      if (!ifs1 || !ifs2) {
+        std::cout << def_score << std::endl;
+        continue;
+      }
+      Stage st;
+      st.input(ifs1);
+      int y, x;
+      while (ifs2 >> y >> x) assert (st.swap(y, x));
+      std::cout << (st.rest == 0 ? st.score : def_score) << std::endl;
+    }
+  }
+  else {
+    help();
+  }
   return 0;
 }
