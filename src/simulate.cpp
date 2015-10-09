@@ -10,5 +10,8 @@ int simulate(Stage st, std::ostream &os, const Records &rec) {
     assert(f);
     st.output(os);
   }
+  for (Record r: st.records)
+    os << r.y << " " << r.x << std::endl;
+  os << st.score << std::endl;
   return st.score;
 }

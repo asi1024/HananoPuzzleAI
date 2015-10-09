@@ -49,5 +49,5 @@ struct Stage {
   void fall();
   bool swap (int, int);
   unsigned long long hash();
-  bool operator < (const Stage &rhs) { return score > rhs.score; }
+  bool operator < (const Stage &rhs) const { return score > rhs.score; }
 };

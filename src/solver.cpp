@@ -16,26 +16,23 @@ struct Data {
 };
 
 Data solve(Stage st) {
-  std::set<unsigned long long> searched;
-  std::queue<Stage> que;
+  std::map<unsigned long long, int> dist;
+  std::priority_queue<Stage> que;
   int cnt = 0;
   que.push(st);
-  searched.insert(st.hash());
+  dist[st.hash()] = 0;
   while (!que.empty()) {
-    ++cnt;
-    if (cnt % 100000 == 0) std::cerr << "Nodes: " << cnt << std::endl;
-    Stage s = que.front();
-    //s.output(std::cout);
-    //for (Record x: r) std::cout << "(" << x.y << ", " << x.x << ") ";
-    //std::cout << std::endl;
-    Stage ns = s;
+    Stage s = que.top();
     que.pop();
+    if (s.score > dist[s.hash()]) continue;
+    Stage ns = s;
+    if (++cnt % 100000 == 0) std::cerr << "Nodes: " << cnt << std::endl;
     for (int i = 1; i < 9; ++i) {
       for (int j = 1; j < 12; ++j) {
         if (ns.swap(i, j)) {
           unsigned long long h = ns.hash();
-          if (!searched.count(h)) {
-            searched.insert(h);
+          if (!dist.count(h) || dist[h] > ns.score) {
+            dist[h] = ns.score;
             if (ns.rest == 0) return Data(ns.records, cnt);
             que.push(ns);
           }
