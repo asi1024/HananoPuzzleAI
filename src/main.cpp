@@ -15,7 +15,15 @@ void help() {
 const int def_score = 3600;
 
 int main (int argc, char *argv[]) {
-  if (strcmp(argv[1], "calc") == 0) {
+  if (argc == 1) {
+    Stage st;
+    st.input(std::cin);
+    st.output(std::cout);
+    Data res = solve(st);
+    simulate(st, std::cout, res.records);
+    std::cout << res.count << std::endl;
+  }
+  else if (strcmp(argv[1], "calc") == 0) {
     if (argc != 2) help();
     std::vector<std::string> problems;
     std::ifstream ifs("dat/LIST");
@@ -59,9 +67,6 @@ int main (int argc, char *argv[]) {
       while (ifs2 >> y >> x) assert (st.swap(y, x));
       std::cout << (st.rest == 0 ? st.score : def_score) << std::endl;
     }
-  }
-  else {
-    help();
   }
   return 0;
 }
