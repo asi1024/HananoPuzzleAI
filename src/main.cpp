@@ -9,7 +9,7 @@
 int main (int argc, char *argv[]) {
   Stage st;
   st.input(std::cin);
-  Info res = solve(st);
+  Data res = solve(st);
   /*
   rec.clear();
   rec.push_back(Record(4, 3));

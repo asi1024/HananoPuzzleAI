@@ -230,6 +230,7 @@ bool Stage::swap (int y, int x) {
     if (flag) break;
     score += bloom_time;
   }
+  records.push_back(Record(y, x));
   return true;
 }
 

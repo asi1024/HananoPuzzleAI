@@ -9,25 +9,22 @@
 #include "def.cpp"
 #include "util.cpp"
 
-using Data = std::pair<Stage, Records>;
-
-struct Info {
+struct Data {
   Records records;
   int count;
-  Info (Records a, int b) : records(a), count(b) {}
+  Data (Records a, int b) : records(a), count(b) {}
 };
 
-Info solve(Stage st) {
+Data solve(Stage st) {
   std::set<unsigned long long> searched;
-  std::queue<Data> que;
+  std::queue<Stage> que;
   int cnt = 0;
-  que.push(std::make_pair(st, Records()));
+  que.push(st);
   searched.insert(st.hash());
   while (!que.empty()) {
     ++cnt;
-    if (cnt % 1000 == 0) std::cerr << "Nodes: " << cnt << std::endl;
-    Stage s = que.front().first;
-    Records r = que.front().second;
+    if (cnt % 100000 == 0) std::cerr << "Nodes: " << cnt << std::endl;
+    Stage s = que.front();
     //s.output(std::cout);
     //for (Record x: r) std::cout << "(" << x.y << ", " << x.x << ") ";
     //std::cout << std::endl;
@@ -39,15 +36,13 @@ Info solve(Stage st) {
           unsigned long long h = ns.hash();
           if (!searched.count(h)) {
             searched.insert(h);
-            r.push_back(Record(i, j));
-            if (ns.rest == 0) return Info(r, cnt);
-            que.push(make_pair(ns, r));
-            r.pop_back();
+            if (ns.rest == 0) return Data(ns.records, cnt);
+            que.push(ns);
           }
           ns = s;
         }
       }
     }
   }
-  return Info(Records(), cnt);
+  return Data(Records(), cnt);
 }

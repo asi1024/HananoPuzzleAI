@@ -32,6 +32,7 @@ struct Stage {
   std::vector<std::string> *board;
   std::vector<Seed> seeds;
   std::vector<Block> blocks;
+  Records records;
   Stage () : score(0), rest(0) { board = new std::vector<std::string>; }
   void clear () { delete board; }
   void input (std::istream&);
