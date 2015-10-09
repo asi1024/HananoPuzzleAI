@@ -9,6 +9,7 @@
 int main (int argc, char *argv[]) {
   Stage st;
   st.input(std::cin);
+  st.output(std::cout);
   Data res = solve(st);
   /*
   rec.clear();
@@ -40,17 +41,9 @@ int main (int argc, char *argv[]) {
   /*
   Records rec;
   rec.clear();
-  rec.push_back(Record(5, 5));
-  rec.push_back(Record(7, 2));
-  rec.push_back(Record(7, 5));
-  rec.push_back(Record(8, 4));
-  rec.push_back(Record(7, 5));
-  rec.push_back(Record(8, 3));
-  rec.push_back(Record(8, 4));
-  rec.push_back(Record(8, 6));
-  rec.push_back(Record(7, 6));
-  rec.push_back(Record(7, 5));
-  Info res = Info(rec, 0);
+  rec.push_back(Record(7, 10));
+  rec.push_back(Record(4, 7));
+  Data res = Data(rec, 0);
   */
 
   simulate(st, std::cout, res.records);
