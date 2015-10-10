@@ -70,6 +70,7 @@ int main (int argc, char *argv[]) {
           std::cerr << "swap error at " << j << " in stage " << i << std::endl;
           return 0;
         }
+        st.output(std::cerr);
       }
       std::cout << (st.rest == 0 ? st.score : def_score) << std::endl;
     }
