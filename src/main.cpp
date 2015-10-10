@@ -47,13 +47,18 @@ int main (int argc, char *argv[]) {
     }
   }
   else if (strcmp(argv[1], "eval") == 0) {
-    if (argc != 3) help();
+    if (argc < 3) help();
     std::string path = argv[2];
     std::vector<std::string> problems;
-    for (int i = 1; i <= 50; ++i) {
-      std::string s = std::to_string(i);
-      if ((int)s.size() == 1) s = "0" + s;
-      problems.push_back(s);
+    if (argc == 3) {
+      for (int i = 1; i <= 50; ++i) {
+        std::string s = std::to_string(i);
+        if ((int)s.size() == 1) s = "0" + s;
+        problems.push_back(s);
+      }
+    }
+    else {
+      problems.push_back(argv[3]);
     }
     for (std::string i: problems) {
       std::ifstream ifs1(("dat/" + i + ".dat").c_str());
@@ -70,6 +75,7 @@ int main (int argc, char *argv[]) {
           std::cerr << "swap error at " << j << " in stage " << i << std::endl;
           return 0;
         }
+        std::cerr << y << " " << x << std::endl;
         st.output(std::cerr);
       }
       std::cout << (st.rest == 0 ? st.score : def_score) << std::endl;
