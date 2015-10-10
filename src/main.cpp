@@ -64,7 +64,12 @@ int main (int argc, char *argv[]) {
       Stage st;
       st.input(ifs1);
       int y, x;
-      while (ifs2 >> y >> x) assert (st.swap(y, x));
+      for (int j = 1; ifs2 >> y >> x; ++j) {
+        if (!st.swap(y, x)) {
+          std::cerr << "swap error at " << j << " in stage " << i << std::endl;
+          return 0;
+        }
+      }
       std::cout << (st.rest == 0 ? st.score : def_score) << std::endl;
     }
   }
