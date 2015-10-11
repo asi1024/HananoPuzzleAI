@@ -12,7 +12,7 @@ void help() {
   exit(1);
 }
 
-const int def_score = 3600;
+const int def_score = 5000;
 
 int main (int argc, char *argv[]) {
   if (argc == 1) {

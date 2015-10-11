@@ -191,11 +191,11 @@ bool Stage::swap (int y, int x) {
   Unit u1 = at(y, x), u2 = at(y, x+1);
   if (u1.unit == Nothing && u2.unit == Nothing) return false;
   if (u1.unit == BoardU || u2.unit == BoardU) return false;
-  //std::cout << t1 << " " << t2 << std::endl;
-  //std::cout << h1 << " " << h2 << std::endl;
   int h1 = height(u1), h2 = height(u2);
   int h = std::max(h1, h2);
   int t1 = under(u1), t2 = under(u2);
+  //std::cout << t1 << " " << t2 << std::endl;
+  //std::cout << h1 << " " << h2 << std::endl;
   if (u1.unit == Nothing) {
     for (int i = 0; i < h; ++i)
       if (at(t2-i, x).unit != Nothing) return false;
