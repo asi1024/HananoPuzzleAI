@@ -15,7 +15,7 @@ struct Seed {
     assert (color != (int)std::string::npos && dir != (int)std::string::npos);
   }
   bool operator < (const Seed &rhs) const {
-    return y == rhs.y ? x < rhs.x : y < rhs.y;
+    return y == rhs.y ? x < rhs.x : y > rhs.y;
   }
 };
 

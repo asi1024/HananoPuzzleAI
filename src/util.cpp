@@ -220,14 +220,16 @@ bool Stage::swap (int y, int x) {
   score += swap_time;
   for (;;) {
     fall();
-    bool flag = true;
+    int pos = -1;
+    std::sort(begin(seeds), end(seeds));
     for (Seed &s: seeds) {
+      if (s.y < pos) break;
       if (!s.bloom) {
         int sw = can_bloom(s);
-        if (sw != 0) { bloom(s, sw); flag = false; }
+        if (sw != 0) { bloom(s, sw); pos = s.y; }
       }
     }
-    if (flag) break;
+    if (pos == -1) break;
     score += bloom_time;
   }
   records.push_back(Record(y, x));
