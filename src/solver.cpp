@@ -26,7 +26,9 @@ Data solve(Stage st) {
     que.pop();
     if (s.score > dist[s.hash()]) continue;
     Stage ns = s;
-    if (++cnt > 1000000) return Data(Records(), cnt);
+    ++cnt;
+    if (cnt % 500000 == 0) std::cerr << cnt << " steps." << std::endl;
+    if (cnt > 5000000) return Data(Records(), cnt);
     for (int i = 1; i < 9; ++i) {
       for (int j = 1; j < 12; ++j) {
         if (ns.swap(i, j)) {
